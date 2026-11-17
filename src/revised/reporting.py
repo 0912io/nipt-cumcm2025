@@ -20,6 +20,14 @@ def output_directories():
     return results, tables
 
 
+def figure_directories():
+    results, tables = output_directories()
+    folders = [results / "figures", tables.parent / "figures"]
+    for folder in folders:
+        folder.mkdir(parents=True, exist_ok=True)
+    return folders
+
+
 def write_frame(frame: pd.DataFrame, name: str) -> None:
     results, tables = output_directories()
     for folder in (results, tables):

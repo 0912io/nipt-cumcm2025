@@ -15,6 +15,7 @@ from .problem2_timing import public_groups as public_problem2
 from .problem2_timing import run_problem2
 from .problem3_multifactor import public_groups as public_problem3
 from .problem3_multifactor import run_problem3
+from .figures import write_figures
 from .problem4_female import run_problem4
 from .reporting import write_frame, write_json
 
@@ -53,7 +54,17 @@ def main(argv=None) -> int:
     print("开始问题四。", flush=True)
     problem4 = run_problem4(prepared["female"], seed=args.seed)
     _write_outputs(prepared["notes"], problem1, problem2, problem3, problem4)
-    print("修订分析已写到 results/revised 与 paper/tables。", flush=True)
+    written = write_figures(
+        male=prepared["male"],
+        female=prepared["female"],
+        bins=pd.DataFrame(problem1.get("bins", [])),
+        curves2=problem2.get("curves", pd.DataFrame()),
+        curves3=pd.DataFrame(problem3.get("curves", [])),
+        groups3=public_problem3(problem3["groups"]),
+    )
+    print("修订分析已写到 results/revised、paper/tables 与 paper/figures。", flush=True)
+    if written:
+        print("图：", ", ".join(sorted({path.rsplit('/', 1)[-1] for path in written})), flush=True)
     return 0
 
 
@@ -70,10 +81,19 @@ def _write_outputs(notes, problem1, problem2, problem3, problem4) -> None:
             "centering": problem1["centering"],
             "vif_additive": problem1["vif_additive"],
             "mixed": problem1["mixed"],
+            "nonlinearity": problem1.get("nonlinearity"),
+            "optimizers": problem1.get("optimizers"),
             "bmi_definition": problem1["bmi_definition"],
         },
         "problem1_models.json",
     )
+    if problem1.get("bins"):
+        write_frame(pd.DataFrame(problem1["bins"]), "problem1_bins.csv")
+    curves2 = problem2.get("curves")
+    if isinstance(curves2, pd.DataFrame) and not curves2.empty:
+        write_frame(curves2, "problem2_curves.csv")
+    if problem3.get("curves"):
+        write_frame(pd.DataFrame(problem3["curves"]), "problem3_curves.csv")
     write_frame(public_problem2(problem2["driven"]), "problem2_groups.csv")
     write_frame(public_problem2(problem2["official"]), "problem2_official_bins.csv")
     write_frame(pd.DataFrame(problem2["selection"]), "problem2_selection.csv")
@@ -143,7 +163,11 @@ def _write_outputs(notes, problem1, problem2, problem3, problem4) -> None:
     write_frame(pd.DataFrame(inference_rows), "problem4_coefficients.csv")
     if threshold_rows:
         write_frame(pd.DataFrame(threshold_rows), "problem4_zone_thresholds.csv")
-    write_json(problem4, "problem4_summary.json")
+    if problem4.get("z_by_ab"):
+        write_frame(pd.DataFrame(problem4["z_by_ab"]), "problem4_z_by_ab.csv")
+    summary = {key: value for key, value in problem4.items() if key != "z_by_ab"}
+    summary["z_by_ab_table"] = "problem4_z_by_ab.csv"
+    write_json(summary, "problem4_summary.json")
 
 
 if __name__ == "__main__":

@@ -61,6 +61,7 @@ def run_problem3(
     _bootstrap_groups(data, primary, groups, n_boot, seed)
     _noise_groups(visits, data, groups, n_noise, seed + 1, n_min)
     lmm = _lmm_sensitivity(visits, data, groups)
+    curves = _curve_rows(data, primary, groups)
     return {
         "n_women": int(len(data)),
         "bmi_definition": "分组轴是首次检测官方BMI。达标时间模型主设定为 BMI + 年龄 + 身高，不含体重。",
@@ -74,9 +75,36 @@ def run_problem3(
         "vif_primary": _aft_vif(data, PRIMARY_COVARIATES),
         "vif_sensitivity": _aft_vif(data, SENSITIVITY_COVARIATES),
         "groups": groups,
+        "curves": curves,
         "lmm": lmm,
         "not_a_retest_policy": True,
     }
+
+
+def _curve_rows(data: pd.DataFrame, fit, groups: list[dict]) -> list[dict]:
+    if not fit.success or not groups:
+        return []
+    grid = time_grid()
+    mu = fit.mean_log_time(data[PRIMARY_COVARIATES].to_numpy(dtype=float))
+    pi = success_probability(mu, fit.sigma, grid)
+    risk = np.asarray(time_risk(grid), dtype=float)
+    rows = []
+    for group in groups:
+        pi_group = np.asarray(pi[group["_mask"]], dtype=float).mean(axis=0)
+        objective = np.asarray(decision_objective(grid, pi_group), dtype=float)
+        for t, probability, time_penalty, value in zip(grid, pi_group, risk, objective):
+            rows.append(
+                {
+                    "group": int(group["group"]),
+                    "interval": group["interval"],
+                    "t": float(t),
+                    "pi": float(probability),
+                    "risk": float(time_penalty),
+                    "objective": float(value),
+                    "t_star": float(group["t_star"]),
+                }
+            )
+    return rows
 
 
 def _select_k(data: pd.DataFrame, covariates: list[str], n_min: int):

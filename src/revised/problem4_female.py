@@ -44,6 +44,7 @@ def run_problem4(visits: pd.DataFrame, seed: int = 2025) -> dict:
         "n_rows": int(len(visits)),
         "n_women": int(visits["woman_id"].nunique()),
         "ae_non_yes_rows": ae_positive,
+        "z_by_ab": z_by_ab(visits),
         "chromosomes": per_chromosome,
         "label": "AB 列，按染色体拆开；空白为该染色体阴性",
         "female_rule": "工作表名称，不用 Y<=0.08",
@@ -312,6 +313,48 @@ def _robust_z_from(reference, target) -> np.ndarray:
     if scale < 1e-8:
         return np.zeros(len(target), dtype=float)
     return (np.asarray(target, dtype=float) - med) / scale
+
+
+def z_by_ab(visits: pd.DataFrame) -> list[dict]:
+    """女胎 Z 值按本次 AB 标签拆开的分布。只描述，不另设阈值。"""
+    rows = []
+    specs = (("T13", "z13", "ab_t13"), ("T18", "z18", "ab_t18"), ("T21", "z21", "ab_t21"))
+    for name, z_column, label in specs:
+        if z_column not in visits.columns or label not in visits.columns:
+            continue
+        z = visits[z_column].to_numpy(dtype=float)
+        y = visits[label].to_numpy(dtype=int)
+        for flag, text in ((0, "阴性"), (1, "阳性")):
+            values = z[(y == flag) & np.isfinite(z)]
+            rows.append(_z_row(name, text, values))
+    return rows
+
+
+def _z_row(chromosome: str, ab: str, values: np.ndarray) -> dict:
+    if values.size == 0:
+        return {
+            "chromosome": chromosome,
+            "ab": ab,
+            "n": 0,
+            "min": None,
+            "q25": None,
+            "median": None,
+            "q75": None,
+            "max": None,
+            "n_abs_ge_3": 0,
+        }
+    q25, median, q75 = np.quantile(values, [0.25, 0.5, 0.75])
+    return {
+        "chromosome": chromosome,
+        "ab": ab,
+        "n": int(values.size),
+        "min": float(np.min(values)),
+        "q25": float(q25),
+        "median": float(median),
+        "q75": float(q75),
+        "max": float(np.max(values)),
+        "n_abs_ge_3": int(np.sum(np.abs(values) >= 3)),
+    }
 
 
 def _strata(qi, q20, q80) -> np.ndarray:
