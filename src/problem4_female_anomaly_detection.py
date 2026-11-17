@@ -1,3 +1,6 @@
+# 历史参赛脚本：对应 paper/final_paper.pdf，仅供对照复现。
+# 赛后修订研究不修改本文件的计算行为；新的分析在 src/revised/。
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

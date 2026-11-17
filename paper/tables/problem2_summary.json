@@ -1,0 +1,13 @@
+{
+  "n_women": 267,
+  "chosen_k": 2,
+  "bmi_definition": "首次检测的官方BMI；缺失时用首次身高体重计算",
+  "replicate_sigma_y": 0.006100848548098696,
+  "primary_slopes": [
+    1.0,
+    3.0,
+    6.0
+  ],
+  "primary_lambda": 1.0,
+  "official_nll": 174.74183742222468
+}

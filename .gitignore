@@ -42,6 +42,7 @@ coverage.xml
 问题二结果/
 问题三结果/
 问题四结果/
+results/
 
 # OS
 .DS_Store

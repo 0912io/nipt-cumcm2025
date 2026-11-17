@@ -1,21 +1,24 @@
-# Data Directory
+# 数据放在哪里
 
-## Required File
+## 修订研究和历史脚本都读仓库根目录
 
-The four analysis scripts read the competition workbook from the **repository root**, not from this folder. Place `附件.xlsx` at the repository root and run the scripts from there:
+`附件.xlsx` 放在仓库根目录，不放在本文件夹里。历史脚本使用 `pd.read_excel("附件.xlsx")`，默认会读到第一张表。修订分析 `src/revised/` 按工作表名称读取两张表：
 
-```
-附件.xlsx
-```
+| 工作表 | 用途 |
+| --- | --- |
+| `男胎检测数据` | 问题一至问题三 |
+| `女胎检测数据` | 问题四 |
 
-Each script opens that relative path (`pd.read_excel("附件.xlsx")` or the same filename passed into its loader). `data/附件.xlsx` is not read.
+女胎不靠 \(Y\le 0.08\) 筛选。女胎表上与 Y 染色体 Z 值、Y 浓度对应的两列表头为空，取值也为空。男胎「唯一比对的读段数」列表头带有两个尾随空格；修订代码在去掉首尾空格后识别该列。Y 浓度和 X 浓度按比例存储，4% 对应 0.04。X 浓度可以为负。`怀孕次数` 里既有整数，也有字符串 `≥3`。
 
-## Data Source
+问题二、问题三的分组使用每位孕妇**首次检测**的官方 BMI。问题一的浓度模型使用**当次**官方 BMI。官方 K 列与由身高（厘米）、体重（千克）计算的 BMI 一致到舍入误差；只有官方 BMI 缺失时才用该公式补上。
 
-- **Competition**: 2025 高教社杯全国大学生数学建模竞赛 (CUMCM)
-- **Problem**: C 题 — NIPT 数据分析
-- **Official Site**: https://www.mcm.edu.cn/
+## 不要把工作簿提交到 Git
 
-## ⚠️ Note
+`.gitignore` 已包含 `附件.xlsx` 和 `*.xlsx`。这是竞赛版权数据。单元测试使用临时生成的合成表，不读取官方文件。
 
-The dataset is copyrighted competition material and is **not included** in this repository. You must obtain it from official CUMCM channels. This directory only holds this note.
+- **竞赛：** 2025 高教社杯全国大学生数学建模竞赛
+- **题目：** C 题，NIPT 的时点选择与胎儿的异常判定
+- **官方页面：** https://www.mcm.edu.cn/
+
+本目录只保留这份说明。
