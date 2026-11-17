@@ -1,0 +1,91 @@
+{
+  "male_rows": 1082,
+  "female_rows": 605,
+  "male_women": 267,
+  "female_women": 147,
+  "id_overlap": 0,
+  "male_ga_parse_failures": 0,
+  "female_ga_parse_failures": 0,
+  "male_y": {
+    "n": 1082,
+    "min": 0.010003887,
+    "median": 0.07506555749999999,
+    "max": 0.234217554
+  },
+  "male_y_below_threshold": 145,
+  "male_y_at_or_above_threshold": 937,
+  "male_x_negative": 74,
+  "female_x_negative": 405,
+  "female_y_all_missing": true,
+  "bmi_formula_max_abs_diff_male": 0.002209545749401798,
+  "bmi_formula_max_abs_diff_female": 4.997723124233744e-09,
+  "male_women_bmi_changes": 248,
+  "male_women_height_changes": 5,
+  "male_age_below_20_rows": 0,
+  "female_age_below_20_rows": 1,
+  "replicate_draw_groups_male": 40,
+  "replicate_sigma_y": 0.006100848548098696,
+  "ivf_male": {
+    "自然受孕": 1065,
+    "IUI（人工授精）": 9,
+    "IVF（试管婴儿）": 8
+  },
+  "ivf_female": {
+    "自然受孕": 597,
+    "IVF（试管婴儿）": 8
+  },
+  "pregnancy_male": {
+    "1": 552,
+    "≥3": 300,
+    "2": 230
+  },
+  "pregnancy_female": {
+    "1": 238,
+    "2": 202,
+    "≥3": 165
+  },
+  "ae_male": {
+    "是": 1044,
+    "否": 38
+  },
+  "ae_female": {
+    "是": 605
+  },
+  "ab_male": {
+    "blank_rows": 956,
+    "any_rows": 126,
+    "t13_rows": 46,
+    "t18_rows": 83,
+    "t21_rows": 24,
+    "women_ever_any": 82,
+    "women_never": 185,
+    "women_ab_changes": 82,
+    "ae_cross": {
+      "ab0|否": 34,
+      "ab0|是": 922,
+      "ab1|否": 4,
+      "ab1|是": 122
+    }
+  },
+  "ab_female": {
+    "blank_rows": 538,
+    "any_rows": 67,
+    "t13_rows": 23,
+    "t18_rows": 46,
+    "t21_rows": 13,
+    "women_ever_any": 44,
+    "women_never": 103,
+    "women_ab_changes": 43,
+    "ae_cross": {
+      "ab0|是": 538,
+      "ab1|是": 67
+    }
+  },
+  "censoring": {
+    "left": 217,
+    "interval": 43,
+    "right": 7,
+    "reverted_after_hit": 32
+  },
+  "hits_women": 267
+}
