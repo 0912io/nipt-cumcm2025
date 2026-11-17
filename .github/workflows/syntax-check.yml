@@ -1,7 +1,8 @@
-# Byte-compile only. The analysis scripts need the copyrighted workbook
-# 附件.xlsx and are not executed in this workflow.
+# On pull_request and on push to main: Ubuntu 24.04, Python 3.9–3.12.
+# Install requirements, byte-compile src, and run the synthetic tests in
+# tests/. This workflow does not read the official workbook 附件.xlsx.
 
-name: Syntax check
+name: Compile and synthetic tests
 
 on:
   pull_request:
