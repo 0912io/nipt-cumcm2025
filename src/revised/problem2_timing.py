@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 
 from .censoring import build_woman_hits, replicate_sigma
+from .curves import lognormal_curves
 from .constants import (
     K_CANDIDATES,
     N_BOOT_TIME,
@@ -76,6 +77,7 @@ def run_problem2(
         "driven": driven["groups"],
         "official": official["groups"],
         "sensitivity": sensitivity,
+        "curves": lognormal_curves(driven["groups"]),
         "replicate_sigma_y": sigma,
         "primary_slopes": PRIMARY_SLOPES,
         "primary_lambda": PRIMARY_LAMBDA,

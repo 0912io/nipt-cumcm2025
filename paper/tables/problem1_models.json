@@ -10,12 +10,12 @@
     "map_ratio": 0.7974720650804067
   },
   "vif_additive": {
-    "ga_c": 1.0316803358180369,
+    "ga_c": 1.031680335818037,
     "bmi_c": 1.032100598776634,
-    "age_c": 1.021928911783197,
-    "ivf_assisted": 1.0264820048809757,
+    "age_c": 1.0219289117831971,
+    "ivf_assisted": 1.026482004880976,
     "gc_c": 1.0096773776844707,
-    "map_c": 1.0105039764313475
+    "map_c": 1.0105039764313477
   },
   "mixed": {
     "models": {
@@ -58,7 +58,10 @@
           "residual_sd": 0.017116855469106813,
           "converged": true
         },
-        "marginal_r2": -0.012760934986956185
+        "marginal_r2": -0.012760934986956185,
+        "fit_warnings": [
+          "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+        ]
       },
       "M2_含交互": {
         "coefficients": [
@@ -107,7 +110,10 @@
           "residual_sd": 0.017113940935033968,
           "converged": true
         },
-        "marginal_r2": -0.011188966678954415
+        "marginal_r2": -0.011188966678954415,
+        "fit_warnings": [
+          "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+        ]
       },
       "M3_主模型": {
         "coefficients": [
@@ -188,7 +194,10 @@
           "residual_sd": 0.017090982898657125,
           "converged": true
         },
-        "marginal_r2": 0.0026662611916554724
+        "marginal_r2": 0.0026662611916554724,
+        "fit_warnings": [
+          "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+        ]
       }
     },
     "lrt": {
@@ -287,8 +296,111 @@
         ],
         "residual_sd": 0.013531104861123008,
         "converged": true
-      }
+      },
+      "fit_warnings": [
+        "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+      ]
     }
+  },
+  "nonlinearity": {
+    "formula": "y ~ ga_c + bmi_c + ga_sq + bmi_sq",
+    "coefficients": [
+      {
+        "term": "Intercept",
+        "estimate": 0.0763161130910596,
+        "std_error": 0.002385547968141092,
+        "p_value": 1.4537620836268446e-224,
+        "ci_low": 0.07164052499011035,
+        "ci_high": 0.08099170119200884
+      },
+      {
+        "term": "ga_c",
+        "estimate": 0.000960086835442428,
+        "std_error": 0.00031031658592740494,
+        "p_value": 0.0019754759836059918,
+        "ci_low": 0.00035187750321928537,
+        "ci_high": 0.0015682961676655705
+      },
+      {
+        "term": "bmi_c",
+        "estimate": -0.001592827328030332,
+        "std_error": 0.0006845742034901429,
+        "p_value": 0.019979018401435424,
+        "ci_low": -0.002934568111616206,
+        "ci_high": -0.0002510865444444578
+      },
+      {
+        "term": "ga_sq",
+        "estimate": 0.00013076348226742692,
+        "std_error": 5.443793961017873e-05,
+        "p_value": 0.01630280078876114,
+        "ci_low": 2.406708123891017e-05,
+        "ci_high": 0.00023745988329594366
+      },
+      {
+        "term": "bmi_sq",
+        "estimate": -0.00014726378729064288,
+        "std_error": 0.00012540126678389774,
+        "p_value": 0.2402586642895339,
+        "ci_low": -0.00039304575380278144,
+        "ci_high": 9.851817922149566e-05
+      }
+    ],
+    "wald_statistic": 7.826135061301413,
+    "wald_df": 2,
+    "wald_p": 0.01997912040208049,
+    "distribution": "chi2",
+    "note": "在孕周和 BMI 的线性项之外加入平方项。联合检验是孕妇聚类稳健的 Wald 统计量。这不是主模型。"
+  },
+  "optimizers": {
+    "formula": "y ~ ga_c + bmi_c + ga_bmi + age_c + ivf_assisted + gc_c + map_c",
+    "fits": [
+      {
+        "method": "lbfgs",
+        "converged": true,
+        "intercept": 0.07782173516006707,
+        "ga_c": 0.0031334166708354696,
+        "bmi_c": -0.001493588272887406,
+        "random_intercept_sd": 0.028654182442825454,
+        "residual_sd": 0.017090982898657125,
+        "warnings": [
+          "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "method": "bfgs",
+        "converged": true,
+        "intercept": 0.0778217343738446,
+        "ga_c": 0.0031334118028058236,
+        "bmi_c": -0.0014935988945158237,
+        "random_intercept_sd": 0.028653860742399437,
+        "residual_sd": 0.01709103821825324,
+        "warnings": [
+          "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "method": "cg",
+        "converged": true,
+        "intercept": 0.07782173808427173,
+        "ga_c": 0.0031334347769144725,
+        "bmi_c": -0.0014935487625301364,
+        "random_intercept_sd": 0.028655379106442308,
+        "residual_sd": 0.017090777138154385,
+        "warnings": [
+          "ConvergenceWarning: The MLE may be on the boundary of the parameter space."
+        ]
+      }
+    ],
+    "random_intercept_sd": {
+      "min": 0.028653860742399437,
+      "max": 0.028655379106442308
+    },
+    "residual_sd": {
+      "min": 0.017090777138154385,
+      "max": 0.01709103821825324
+    },
+    "note": "REML 随机截距，与主混合模型同一公式。用于核对优化器，不另报一套系数。"
   },
   "bmi_definition": "就诊级官方BMI（K列）；缺失时才用当次身高体重公式补齐"
 }
