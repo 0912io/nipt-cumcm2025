@@ -26,18 +26,20 @@ nipt-cumcm2025/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
-├── data/                        # 数据目录（需自行放置附件.xlsx）
-│   └── README.md
+├── LICENSE
+├── data/
+│   └── README.md                # 数据放置说明（附件不入库）
 ├── src/                         # 源代码
-│   ├── problem1_ridge_regression.py      # 问题一：Ridge 回归
-│   ├── problem2_optimal_timing.py        # 问题二：最优检测时点
+│   ├── problem1_ridge_regression.py       # 问题一：Ridge 回归
+│   ├── problem2_optimal_timing.py         # 问题二：最优检测时点
 │   ├── problem3_clustering_optimization.py # 问题三：聚类与优化
 │   └── problem4_female_anomaly_detection.py # 问题四：异常检测
-├── outputs/                     # 输出目录（图表、CSV、报告）
-├── paper/                       # 最终论文
-│   └── final_paper.pdf
-└── docs/                        # 补充文档
+├── outputs/                     # 空目录占位；脚本不写入此处
+└── paper/                       # 最终论文
+    └── final_paper.pdf
 ```
+
+四个脚本在仓库根目录运行。结果写在根目录的 `问题一结果/`、`问题二结果/`、`问题三结果/`、`问题四结果/`（已被 `.gitignore` 忽略，不会提交）。
 
 ## 🚀 快速开始
 
@@ -52,7 +54,7 @@ pip install -r requirements.txt
 
 ### 数据准备
 
-将竞赛提供的 `附件.xlsx` 放置于项目根目录下：
+四个脚本都从当前工作目录读取 `附件.xlsx`。请把竞赛数据放在仓库根目录，并在仓库根目录执行命令（不要放进 `data/`）：
 
 ```
 nipt-cumcm2025/
@@ -60,6 +62,8 @@ nipt-cumcm2025/
 ├── src/
 ├── ...
 ```
+
+说明见 [data/README.md](data/README.md)。竞赛数据有版权，仓库不包含该文件。
 
 ### 按顺序运行
 
@@ -77,7 +81,9 @@ python src/problem3_clustering_optimization.py
 python src/problem4_female_anomaly_detection.py
 ```
 
-每个脚本会在项目根目录下生成对应的 `问题X结果/` 文件夹，包含全部图表和 CSV 数据。
+每个脚本会在仓库根目录生成对应的 `问题X结果/` 文件夹，包含图表、表格和文本报告。这些目录已列入 `.gitignore`。`outputs/` 只是空目录占位，脚本不会写入其中。
+
+推送到 `main` 或打开 Pull Request 时，GitHub Actions 会在 Python 3.9、3.10、3.11、3.12 上安装 `requirements.txt`，并对 `src/` 执行 `python -m compileall -q src`。该检查不读取 `附件.xlsx`，也不运行分析脚本。
 
 ## 📊 方法详情
 
@@ -126,7 +132,7 @@ python src/problem4_female_anomaly_detection.py
 
 - 本项目使用 2025 年 CUMCM C 题官方提供的数据集
 - 原始数据文件 `附件.xlsx` 未包含在仓库中（竞赛数据版权）
-- 使用时请将数据文件放置于项目根目录
+- 使用时请将数据文件放置于仓库根目录的 `附件.xlsx`（与四个脚本读取的路径一致，不是 `data/附件.xlsx`）
 
 ## 📝 License
 
