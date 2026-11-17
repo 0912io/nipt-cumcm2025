@@ -2,11 +2,13 @@
 
 ## Required File
 
-Place the CUMCM 2025 Problem C dataset here:
+The four analysis scripts read the competition workbook from the **repository root**, not from this folder. Place `附件.xlsx` at the repository root and run the scripts from there:
 
 ```
-data/附件.xlsx
+附件.xlsx
 ```
+
+Each script opens that relative path (`pd.read_excel("附件.xlsx")` or the same filename passed into its loader). `data/附件.xlsx` is not read.
 
 ## Data Source
 
@@ -16,4 +18,4 @@ data/附件.xlsx
 
 ## ⚠️ Note
 
-The dataset is copyrighted competition material and is **not included** in this repository. You must obtain it from official CUMCM channels.
+The dataset is copyrighted competition material and is **not included** in this repository. You must obtain it from official CUMCM channels. This directory only holds this note.
