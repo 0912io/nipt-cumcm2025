@@ -44,7 +44,7 @@ python -m pytest -q tests
 python -m compileall -q src
 ```
 
-推送到 `main` 或打开 Pull Request 时，GitHub Actions 在 Ubuntu 24.04 上用 Python 3.9–3.12 安装依赖、编译 `src/` 并运行 `tests/`。
+推送到 `main` 或打开 Pull Request 时，GitHub Actions 在 Ubuntu 24.04 上用 Python 3.9–3.12 安装依赖、编译 `src/`，并运行不读取官方工作簿的合成测试。
 
 ## 历史脚本
 
